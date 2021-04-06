@@ -11,6 +11,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(TRIGGER,GPIO.OUT)
 GPIO.setup(ECHO,GPIO.IN)
 os.chdir('/home/pi/Music')
+musicFilePath ='Preet.mp3'
 f = glob.glob('Preet.mp3')
 h = len(f)
 status = 1
@@ -37,23 +38,21 @@ def distance():
       
 for d in range(4,4000):
     d= int (distance())
-    player = subprocess.Popen(["omxplayer",f[pointer]],stdin=subprocess.PIPE)
+    player = subprocess.Popen(["omxplayer {}".format(musicFilePath)],stdin=subprocess.PIPE)
     fi = player.poll()
     while d==True:
         player.stdin.write("p")
         if d>4 and d<=45:        
-            vol = dist/3
+            vol = d/3
             if(vol>volume):
                 for counter in range(1,vol-volume):
                     player.stdin.write("+")
                     volume = volume + 1
-                    led()
                     sleep(0.1)
             elif(vol<volume):
                 for counter in range(1,volume-vol):
                     player.stdin.write("-")
                     volume = volume - 1
-                    led()
                     sleep(0.1)
                     print("play while 4-45cm")
         elif d>45:
