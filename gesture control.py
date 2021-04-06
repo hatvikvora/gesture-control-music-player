@@ -38,7 +38,7 @@ def distance():
       
 for d in range(4,4000):
     d= int (distance())
-    player = subprocess.Popen(["omxplayer {}".format(musicFilePath)],stdin=subprocess.PIPE)
+    player = subprocess.Popen(['omxplayer', '-b', musicFilePath],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,close_fds=True)
     fi = player.poll()
     while d==True:
         player.stdin.write("p")
@@ -65,3 +65,4 @@ for d in range(4,4000):
 while KeyboardInterrupt:
     print("Stopped by user")
     GPIO.cleanup()
+    
